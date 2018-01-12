@@ -27,7 +27,6 @@
 
 import init.qcom.power.rc
 import init.qcom.usb.rc
-import init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -56,6 +55,7 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
 
+    write /sys/devices/soc/soc\:fpc_fpc1020/enable_wakeup 1
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 on late-fs
@@ -97,7 +97,6 @@ on boot
 
     # Access permission for fingerprint
     chown system system /sys/devices/soc/soc:fpc_fpc1020/irq
-    chown system system /sys/devices/soc/soc:fpc_fpc1020/enable_key_events
     chown system system /sys/devices/soc/soc:fpc_fpc1020/enable_wakeup
     chown system system /sys/devices/soc/soc:fpc_fpc1020/proximity_state
 
@@ -235,6 +234,9 @@ on fs
     swapon_all fstab.qcom
 
 on post-fs-data
+    chown system system /dev/sysmatdrv
+    chmod 0660 /dev/sysmatdrv
+
     # Create directories for fingerprint
     mkdir /data/misc/stargate 0770 system system
     mkdir /data/misc/stargate/bg_estimation 0770 system system
