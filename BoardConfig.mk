@@ -113,8 +113,8 @@ QCOM_BT_USE_BTNV := true
 
 # Camera
 BOARD_QTI_CAMERA_32BIT_ONLY := true
-TARGET_CAMERASERVICE_CLOSES_NATIVE_HANDLES := true
-TARGET_USES_MEDIA_EXTENSIONS := true
+DEVICE_SPECIFIC_CAMERA_PATH := $(DEVICE_PATH)/camera
+TARGET_SUPPORT_HAL1 := false
 USE_DEVICE_SPECIFIC_CAMERA := true
 
 # Charger
@@ -124,11 +124,7 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_USES_QCNE := true
 
 # Dex
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    WITH_DEXPREOPT ?= true
-  endif
-endif
+WITH_DEXPREOPT ?= true
 WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 # Display
@@ -160,10 +156,6 @@ TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 # Init
 TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
 
-# Lineage Hardware
-BOARD_HARDWARE_CLASS += \
-    $(DEVICE_PATH)/lineagehw
-
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
@@ -190,20 +182,17 @@ TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 # QCOM
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QC_TIME_SERVICES := true
-TARGET_USE_SDCLANG := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 
 # Releasetools
 TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_xiaomi
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # RIL
-BOARD_RIL_CLASS := ../../../$(DEVICE_PATH)/ril
 PROTOBUF_SUPPORTED := true
 TARGET_RIL_VARIANT := caf
 
@@ -211,10 +200,6 @@ TARGET_RIL_VARIANT := caf
 include device/qcom/sepolicy/sepolicy.mk
 
 #BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
-
-# Vendor init
-TARGET_INIT_VENDOR_LIB := libinit_msm8996
-TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8996
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true

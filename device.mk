@@ -21,9 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, vendor/xiaomi/gemini/gemini-vendor.mk)
 
 # Overlays
-DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay \
-#    $(LOCAL_PATH)/overlay-lineage
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -132,15 +130,12 @@ PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-impl \
     consumerir.msm8996
 
-# ConfigPanel
-PRODUCT_PACKAGES += \
-    ConfigPanel
-
 # Camera
 PRODUCT_PACKAGES += \
+    camera.msm8996 \
+    libmm-qcamera \
     android.hardware.camera.provider@2.4-impl \
-    camera.device@3.2-impl \
-    Snap
+    camera.device@3.2-impl
 
 # CNE
 PRODUCT_PACKAGES += \
@@ -157,8 +152,7 @@ PRODUCT_PACKAGES += \
     init.qcom.sh \
     init.qcom.power.rc \
     init.qcom.usb.rc \
-    ueventd.qcom.rc \
-    init.target.rc
+    ueventd.qcom.rc
 
 # Display
 PRODUCT_PACKAGES += \
@@ -176,10 +170,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/calib.cfg:system/etc/calib.cfg
-
-# Doze mode
-PRODUCT_PACKAGES += \
-    XiaomiDoze
 
 # DRM
 PRODUCT_PACKAGES += \
